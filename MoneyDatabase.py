@@ -34,7 +34,7 @@ def submit():
     conn.commit()
     conn.close()
 
-    card_cbox.selection_clear()
+    card_cbox.set('Select a Card')
     amount.delete(0, END)
     descrip.delete(0, END)
 
@@ -47,8 +47,13 @@ def query():
     print(records)
     conn.commit()
     conn.close()
+
     
-            
+text_var1 = StringVar()
+text_var2 = StringVar()
+text_var3 = StringVar()
+
+
 #Create Layout
 topFrame = Frame(root)
 topFrame.pack(side='top', padx=10, pady=(10, 5))
@@ -56,26 +61,20 @@ topFrame.pack(side='top', padx=10, pady=(10, 5))
 bottomFrame = Frame(root, )
 bottomFrame.pack(side='bottom', padx=10, pady=(5, 10))
 
-#Create Attributes
-
-#Check if any attritbutes have no value
-# global notSelected;
-notSelected = True
-
 #Dropdown List
 card_options = ["Discover Debit", "Discover Credit", "Capital One", "Blue Cash Everyday", "Wells Fargo", "Paypal", "Costco"]
 
-card_cbox = ttk.Combobox(topFrame, values=card_options)
+card_cbox = ttk.Combobox(topFrame, values=card_options, textvariable=text_var3)
 card_cbox.set("Select a Card")
 card_cbox['state'] = 'readonly'
 card_cbox.pack()
 
 #Entry
-amount = Entry(topFrame, width=10)
+amount = Entry(topFrame, width=10, textvariable=text_var1)
 amount.pack()
 
 
-descrip = Entry(topFrame, width=20)
+descrip = Entry(topFrame, width=20, textvariable=text_var2)
 descrip.pack()
 
 
@@ -87,7 +86,18 @@ def clear():
 
 #Submit Button
 submitBtn = Button(topFrame, text="Submit Record", command=submit)
+submitBtn.config(state='disabled')
 submitBtn.pack()
+
+def checkButton(*args):
+    if text_var1.get() and text_var2.get() != '' and card_cbox.get() != "Select a Card":
+        submitBtn.config(state='normal')
+    else:
+        submitBtn.config(state='disabled')
+
+text_var1.trace('w', checkButton)
+text_var2.trace('w', checkButton)
+card_cbox.bind('<<ComboboxSelected>>', checkButton)
 
 #Clear Button
 clearBtn = Button(topFrame, text="Clear", command=clear)
@@ -99,13 +109,5 @@ queryBtn.pack()
 
 queryList = Label(bottomFrame)
 queryList.pack()
-
-if(notSelected):
-    submitBtn.config(state='disabled')
-else:
-    submitBtn.config(state='normal')
-
-
-
 
 root.mainloop()
