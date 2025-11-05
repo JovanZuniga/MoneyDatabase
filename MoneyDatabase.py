@@ -70,21 +70,12 @@ card_cbox.set("Select a Card")
 card_cbox['state'] = 'readonly'
 card_cbox.pack()
 
-#Track Entry Changes
-def on_text_change(*args):
-    if(amount.get() and descrip.get() != ''):
-      notSelected = False
-
-text_var = StringVar()
-text_var.trace_add("write", on_text_change)
-
-
 #Entry
-amount = Entry(topFrame, width=10, textvariable=text_var)
+amount = Entry(topFrame, width=10)
 amount.pack()
 
 
-descrip = Entry(topFrame, width=20, textvariable=text_var)
+descrip = Entry(topFrame, width=20)
 descrip.pack()
 
 
