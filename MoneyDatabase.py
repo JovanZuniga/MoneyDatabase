@@ -53,7 +53,7 @@ def query():
     conn.close()
 
 #Validate Entry is less than 5 digits
-def validate(P):
+def validateDollars(P):
     if len(P) == 0:
         #empty is ok
         return True
@@ -62,7 +62,17 @@ def validate(P):
     else:
         return False
     
-vcmd = (root.register(validate), '%P')
+def validateCents(P):
+    if len(P) == 0:
+        #empty is ok
+        return True
+    elif len(P) <= 2 and P.isdecimal():
+        return True
+    else:
+        return False
+    
+vcmd = (root.register(validateDollars), '%P')
+vcmd2 = (root.register(validateCents), '%P')
 
     
 text_var1 = tk.StringVar()
@@ -103,7 +113,7 @@ amtDollars = tk.Entry(amtFrame, width=5, textvariable=text_var1, validate="key",
 amtDollars.pack(side='left')
 amtLbl2 = tk.Label(amtFrame, text='.')
 amtLbl2.pack(side='left')
-amtCents = tk.Entry(amtFrame, width=2, textvariable=text_var4)
+amtCents = tk.Entry(amtFrame, width=2, textvariable=text_var4, validate='key', validatecommand=vcmd2)
 amtCents.pack(side='left')
 
 
