@@ -38,6 +38,7 @@ def submit():
     amount.delete(0, END)
     descrip.delete(0, END)
 
+#Query the database
 def query():
     conn = sqlite3.connect('transactions.db')
     c = conn.cursor()
@@ -47,6 +48,18 @@ def query():
     print(records)
     conn.commit()
     conn.close()
+
+#Validate Entry is less than 5 digits
+def validate(P):
+    if len(P) == 0:
+        #empty is ok
+        return True
+    elif len(P) <= 5 and P.isdecimal():
+        return True
+    else:
+        return False
+    
+vcmd = (root.register(validate), '%P')
 
     
 text_var1 = StringVar()
@@ -70,7 +83,7 @@ card_cbox['state'] = 'readonly'
 card_cbox.pack()
 
 #Entry
-amount = Entry(topFrame, width=10, textvariable=text_var1)
+amount = Entry(topFrame, width=5, textvariable=text_var1, validate="key", validatecommand=vcmd)
 amount.pack()
 
 
