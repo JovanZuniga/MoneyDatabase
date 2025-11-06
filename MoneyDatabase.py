@@ -1,8 +1,8 @@
 import sqlite3
-from tkinter import *
+import tkinter as tk
 from tkinter import ttk
 
-root = Tk()
+root = tk.Tk()
 root.title("Money Spent Database")
 root.geometry("500x500")
 root.config(bg="#000000")
@@ -65,23 +65,23 @@ def validate(P):
 vcmd = (root.register(validate), '%P')
 
     
-text_var1 = StringVar()
-text_var2 = StringVar()
-text_var3 = StringVar()
-text_var4 = StringVar()
+text_var1 = tk.StringVar()
+text_var2 = tk.StringVar()
+text_var3 = tk.StringVar()
+text_var4 = tk.StringVar()
 
 
 #Create Layout
-topFrame = Frame(root)
+topFrame = tk.Frame(root)
 topFrame.pack(side='top', padx=20, pady=(20, 5), fill='both')
 topFrame.columnconfigure(0, weight=1)
 # topFrame.columnconfigure(1, weight=1)
 topFrame.columnconfigure(2, weight=1)
 
-bottomFrame = Frame(root)
+bottomFrame = tk.Frame(root)
 bottomFrame.pack(side='bottom', padx=10, pady=(5, 10))
 
-titleLbl = Label(topFrame, text="Enter a New Record")
+titleLbl = tk.Label(topFrame, text="Enter a New Record")
 titleLbl.grid(column=0, row=0, columnspan=3)
 #Dropdown List
 card_options = ["Discover Debit", "Discover Credit", "Capital One", "Blue Cash Everyday", "Wells Fargo", "Paypal", "Costco"]
@@ -91,23 +91,23 @@ card_cbox.set("Select a Card")
 card_cbox['state'] = 'readonly'
 card_cbox.grid(row=3, column=1)
 
-amtFrame = Frame(topFrame)
+amtFrame = tk.Frame(topFrame)
 amtFrame.grid(row=1, column=1, columnspan=3)
 
 
-amtLbl = Label(amtFrame, text="Amount:   $")
+amtLbl = tk.Label(amtFrame, text="Amount:   $")
 amtLbl.pack(side='left')
 
 #Entry
-amtDollars = Entry(amtFrame, width=5, textvariable=text_var1, validate="key", validatecommand=vcmd)
+amtDollars = tk.Entry(amtFrame, width=5, textvariable=text_var1, validate="key", validatecommand=vcmd)
 amtDollars.pack(side='left')
-amtLbl2 = Label(amtFrame, text='.')
+amtLbl2 = tk.Label(amtFrame, text='.')
 amtLbl2.pack(side='left')
-amtCents = Entry(amtFrame, width=2, textvariable=text_var4)
+amtCents = tk.Entry(amtFrame, width=2, textvariable=text_var4)
 amtCents.pack(side='left')
 
 
-descrip = Entry(topFrame, width=20, textvariable=text_var2)
+descrip = tk.Entry(topFrame, width=20, textvariable=text_var2)
 descrip.grid(row=2, column=1)
 
 
@@ -119,7 +119,7 @@ def clear():
 
 
 #Submit Button
-submitBtn = Button(topFrame, text="Submit Record", command=submit)
+submitBtn = tk.Button(topFrame, text="Submit Record", command=submit)
 submitBtn.config(state='disabled')
 submitBtn.grid(row=4, column=1)
 
@@ -135,14 +135,14 @@ text_var4.trace('w', checkButton)
 card_cbox.bind('<<ComboboxSelected>>', checkButton)
 
 #Clear Button
-clearBtn = Button(topFrame, text="Clear", command=clear)
+clearBtn = tk.Button(topFrame, text="Clear", command=clear)
 clearBtn.grid(row=5, column=1)
 
 #Query Button
-queryBtn = Button(bottomFrame, text="Load Records", command=query)
+queryBtn = tk.Button(bottomFrame, text="Load Records", command=query)
 queryBtn.pack()
 
-queryList = Label(bottomFrame)
+queryList = tk.Label(bottomFrame)
 queryList.pack()
 
 root.mainloop()
